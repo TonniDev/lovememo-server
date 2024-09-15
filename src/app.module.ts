@@ -8,6 +8,8 @@ import ormConfigProd from "./config/orm.config.prod";
 import {Goal} from "./goals/entities/goal.entity";
 import { User } from './users/entities/user.entity';
 import { GoalsController } from './goals/goals.controller';
+import {UsersController} from "./users/users.controller";
+import {UsersService} from "./users/users.service";
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { GoalsController } from './goals/goals.controller';
     }),
     TypeOrmModule.forFeature([User, Goal]),
   ],
-  controllers: [AppController, GoalsController],
-  providers: [AppService],
+  controllers: [AppController, GoalsController, UsersController],
+  providers: [AppService, UsersService],
 })
 export class AppModule {}
