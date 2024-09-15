@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import {ConfigModule, ConfigService} from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import ormConfig from "./config/orm.config";
-import ormConfigProd from "./config/orm.config.prod";
 import {Goal} from "./goals/entities/goal.entity";
 import { User } from './users/entities/user.entity';
 import { GoalsController } from './goals/goals.controller';
@@ -15,12 +13,29 @@ import {UsersService} from "./users/users.service";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [ormConfig],
       expandVariables: true,
     }),
     TypeOrmModule.forRootAsync({
-      useFactory:
-        process.env.NODE_ENV !== 'production' ? ormConfig : ormConfigProd,
+      imports: [ConfigModule],
+      // @ts-expect-error Not typings for .env variables
+      useFactory: (configService: ConfigService) => ({
+        type: configService.get('DB_DIALECT'),
+        host: configService.get('DB_HOST_DEV'),
+        port: configService.get('DB_PORT_DEV'),
+        username: configService.get('DB_USER_DEV'),
+        password: configService.get('DB_PASS_DEV'),
+        database: configService.get('DB_NAME_DEV'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: false,
+        autoLoadEntities: true,
+        migrations: [__dirname + '/db/migrations/**/*{.ts,.js}'],
+        seeds: [__dirname + '/db/seeds/**/*{.ts,.js}'],
+        factories: [__dirname + '/db/factories/**/*{.ts,.js}'],
+        cli: {
+          migrationsDir: __dirname + '/db/migrations/',
+        },
+      }),
+      inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([User, Goal]),
   ],

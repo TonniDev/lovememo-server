@@ -3,7 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as path from 'node:path';
 
 export default registerAs(
-  'orm.config',
+  'orm.db',
   (): TypeOrmModuleOptions => ({
     type: 'postgres',
     host: 'localhost', // TODO: replace with production host
