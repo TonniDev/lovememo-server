@@ -1,6 +1,6 @@
-import * as dotenv from 'dotenv';
-import * as process from 'node:process';
 import * as path from 'node:path';
+import * as process from 'node:process';
+import * as dotenv from 'dotenv';
 dotenv.config();
 import { DataSource } from 'typeorm';
 

@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import {ConfigModule, ConfigService} from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {Goal} from "./goals/entities/goal.entity";
-import { User } from './users/entities/user.entity';
+import { Goal } from './goals/entities/goal.entity';
 import { GoalsController } from './goals/goals.controller';
-import {UsersController} from "./users/users.controller";
-import {UsersService} from "./users/users.service";
+import { User } from './users/entities/user.entity';
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [

@@ -11,14 +11,15 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateGoalDto, UpdateGoalDto } from './dtos/index';
+import { CreateGoalDto, UpdateGoalDto } from './dtos';
 import { Goal } from './entities/goal.entity';
 
 @Controller('goals')
 export class GoalsController {
   // Dependency Injection
   constructor(
-    @InjectRepository(Goal) private readonly repository: Repository<Goal>,
+    @InjectRepository(Goal)
+    private readonly repository: Repository<Goal>,
   ) {}
 
   // GET /api/v1/goals
@@ -31,7 +32,7 @@ export class GoalsController {
 
   // GET /api/v1/goals/:id
   @Get(':id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: string) {
     const goal = await this.repository.findOneBy({ id });
 
     if (!goal) {
@@ -55,7 +56,7 @@ export class GoalsController {
 
   // PATCH /api/v1/goals/:id
   @Patch(':id')
-  async update(@Param('id') id, @Body() input: UpdateGoalDto) {
+  async update(@Param('id') id: string, @Body() input: UpdateGoalDto) {
     const goal = await this.repository.findOneBy({ id });
 
     if (!goal) {
@@ -75,7 +76,7 @@ export class GoalsController {
   // DELETE /api/v1/goals/:id
   @Delete(':id')
   @HttpCode(204)
-  async remove(@Param('id') id) {
+  async remove(@Param('id') id: string) {
     const goal = await this.repository.findOneBy({ id });
 
     if (!goal) {

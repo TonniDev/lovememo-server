@@ -1,4 +1,4 @@
-import {Priority, Status} from "../enums";
+import { Priority, Status } from '../enums';
 
 export class CreateGoalDto {
   public name: string;
@@ -6,5 +6,4 @@ export class CreateGoalDto {
   public status: Status;
   public createdAt: string;
   public updatedAt: string;
-  private sender: string;
 }
