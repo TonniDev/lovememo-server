@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+    - id: husky-run-pre-commit
+      name: husky
+      language: script
+      entry: bin/run-husky.sh
+      pass_filenames: false
+      verbose: true
