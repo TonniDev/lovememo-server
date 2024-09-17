@@ -27,7 +27,7 @@
     "migration:create": "typeorm migration:create ./src/db/migrations/schema-update",
     "migration:generate": "yarn typeorm-ts-node-commonjs migration:generate ./src/db/migrations/schema-update -d ./src/db/data-source.ts",
     "migration:show": "yarn typeorm-ts-node-commonjs migration:show -d ./src/db/data-source.ts",
-    "migration:run": "yarn typeorm-ts-node-commonjs migration:run -d  ./src/db/data-source.ts",
+    "migration:run": "yarn typeorm-ts-node-commonjs migration:run -d ./src/db/data-source.ts",
     "migration:revert": "yarn typeorm-ts-node-commonjs migration:revert -d src/db/data-source.ts"
   },
   "dependencies": {

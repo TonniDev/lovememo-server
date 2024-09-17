@@ -1,8 +1,11 @@
-# compiled output
-/dist
-/node_modules
-/build
-/db_data
+.git
+.husky
+.pre-commit*
+bin
+dist
+node_modules
+
+coverage
 
 # Logs
 logs
@@ -12,6 +15,10 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+
+# temp directory
+.temp
+.tmp
 
 # OS
 .DS_Store
@@ -37,21 +44,7 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # dotenv environment variable files
-.env
 .env.development.local
 .env.test.local
 .env.production.local
 .env.local
-
-# temp directory
-.temp
-.tmp
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

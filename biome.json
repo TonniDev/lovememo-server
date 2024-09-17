@@ -52,7 +52,6 @@
         "noUnusedVariables": "error",
         "useArrayLiterals": "off",
         "useExhaustiveDependencies": "warn",
-        "useHookAtTopLevel": "error",
         "useIsNan": "error",
         "useValidForDirection": "error",
         "useYield": "error"
@@ -256,10 +255,15 @@
   },
   "overrides": [
     {
-      "include": ["**/*.ts", "**/*.tsx"]
+      "include": [
+        "**/*.ts",
+        "**/*.tsx"
+      ]
     },
     {
-      "include": ["**/package.json"],
+      "include": [
+        "**/package.json"
+      ],
       "formatter": {
         "lineWidth": 1
       }
