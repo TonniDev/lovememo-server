@@ -4663,9 +4663,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lovememo@workspace:.":
+"lovememo-server@workspace:.":
   version: 0.0.0-use.local
-  resolution: "lovememo@workspace:."
+  resolution: "lovememo-server@workspace:."
   dependencies:
     "@biomejs/biome": "npm:^1.9.1"
     "@nestjs/cli": "npm:^10.0.0"

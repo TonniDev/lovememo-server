@@ -1,7 +1,7 @@
 {
-  "name": "lovememo",
+  "name": "lovememo-server",
   "version": "0.0.1",
-  "description": "",
+  "description": "Love Memo backend API and DB",
   "author": "Tonni Andrade",
   "private": true,
   "license": "Private",
