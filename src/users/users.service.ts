@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,8 +12,12 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
-    return await this.userRepository.save(createUserDto);
+  async create(userData: CreateUserDto) {
+    if (!userData.username) {
+      userData.username = userData.email;
+    }
+    const newUser = this.userRepository.create(userData);
+    return await this.userRepository.save(newUser);
   }
 
   async findAll() {
@@ -21,7 +25,19 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    return await this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
+  }
+
+  async findByEmail(email: string) {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

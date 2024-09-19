@@ -1,20 +1,24 @@
+import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthenticationModule } from './auth/authentication.module';
 import { baseDataSource } from './db/data-source';
 import { Goal } from './goals/entities/goal.entity';
-import { GoalsController } from './goals/goals.controller';
 import { User } from './users/entities/user.entity';
-import { UsersController } from './users/users.controller';
-import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       expandVariables: true,
+      validationSchema: Joi.object({
+        JWT_SECRET: Joi.string().required(),
+        JWT_EXPIRATION_TIME: Joi.string().required(),
+      }),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -22,8 +26,10 @@ import { UsersService } from './users/users.service';
       inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([User, Goal]),
+    UsersModule,
+    AuthenticationModule,
   ],
-  controllers: [AppController, GoalsController, UsersController],
-  providers: [AppService, UsersService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
