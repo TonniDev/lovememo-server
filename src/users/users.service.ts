@@ -34,12 +34,6 @@ export class UsersService {
 
   async findByEmail(email: string) {
     return await this.userRepository.findOne({ where: { email } });
-    // const user = await this.userRepository.findOne({ where: { email } });
-    // if (user) {
-    //   return user;
-    // }
-    // console.log('@user', user);
-    // throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

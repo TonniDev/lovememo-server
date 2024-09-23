@@ -25,11 +25,17 @@ services:
       target: development
     env_file:
       - .env
+    environment:
+      - HTTPS=true
+      - SSL_KEY=/etc/ssl/private/localhost-key.pem
+      - SSL_CERT=/etc/ssl/private/localhost.pem
     ports:
       - "3000:3000"
+      - "3443:3443"
       - "9229:9229"
     volumes:
       - .:/usr/src/app
+      - ./ssl:/etc/ssl/private
     networks:
       - lovememo
     depends_on:
