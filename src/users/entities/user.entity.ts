@@ -14,6 +14,15 @@ export class User {
   @Column({ unique: true, type: 'varchar' })
   public email: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar', nullable: true })
   public password: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  public oauth_id: string;
+
+  @Column({ type: 'simple-array', nullable: true })
+  public oauth_providers: string[];
+
+  @Column({ type: 'simple-json', nullable: true })
+  public oauth_info: { [key: string]: any };
 }

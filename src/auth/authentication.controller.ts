@@ -2,6 +2,8 @@ import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nes
 import type { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
 import { RegisterDto } from './dto/register.dto';
+import { AuthStrategy } from './enums';
+import { GoogleOauthGuard } from './googleOAuth.guard';
 import JwtAuthenticationGuard from './jwtAuthentication.guard';
 import { LocalAuthenticationGuard } from './localAuthentication.guard';
 import RequestWithUser from './requestWithUser.interface';
@@ -12,7 +14,7 @@ export class AuthenticationController {
 
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
-    return this.authenticationService.register(registrationData);
+    return this.authenticationService.registerLocal(registrationData);
   }
 
   @HttpCode(200)
@@ -24,6 +26,23 @@ export class AuthenticationController {
     response.setHeader('Set-Cookie', cookie);
     user.password = undefined;
     return response.send(user);
+  }
+
+  @Get('google')
+  @UseGuards(GoogleOauthGuard)
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: This is just the entry point to the Google OAuth flow
+  async auth() {}
+
+  @Get('g/return')
+  @UseGuards(GoogleOauthGuard)
+  async googleAuthCallback(@Req() req: RequestWithUser, @Res() res: Response) {
+    const { cookie, user } = await this.authenticationService.registerSocial(
+      req.user,
+      AuthStrategy.GOOGLE,
+    );
+    res.setHeader('Set-Cookie', cookie);
+    user.password = undefined;
+    return res.send(user);
   }
 
   @Post('log-out')
